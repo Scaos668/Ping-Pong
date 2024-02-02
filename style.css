@@ -6,10 +6,10 @@ body {
 }
 
 body {
-  background-color: rgba(0, 0, 0, 0.635);
+  background-color: rgba(0, 0, 0, 0.977);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
 }
 
@@ -26,4 +26,21 @@ body {
 .font {
   font-family: "Press Start 2P", system-ui;
   color: #ffd163;
+}
+
+.border {
+  border: 2px solid #ffd163;
+}
+
+.vanish {
+  display: none;
+}
+
+span {
+  padding: 30px;
+}
+
+.guide {
+  padding-bottom: 15px;
+  border-bottom: 3px solid #ffd163;
 }

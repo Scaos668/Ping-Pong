@@ -8,6 +8,8 @@ const maxPaddleY = map.height - grid * paddleHeight;
 
 let pause = true;
 let pauseLabel = document.querySelector("#pause");
+let scoreboard = document.querySelector(".table");
+let guide = document.querySelector(".guide");
 
 let leftScoreText = document.querySelector("#leftCounter");
 let rightScoreText = document.querySelector("#rightCounter");
@@ -15,8 +17,11 @@ let rightScoreText = document.querySelector("#rightCounter");
 let leftScore = 0;
 let rightScore = 0;
 
+let canToggleMap = true;
+let hasMap = false;
+
 let ballSpeed = 4;
-const paddleSpeed = 5;
+const paddleSpeed = 7.3125;
 
 const leftPaddle = {
   x: grid * 2,
@@ -92,10 +97,10 @@ function resetGame() {
 }
 
 function collideWallsWithPaddle(paddle) {
-  if (paddle.y == 0) {
-    paddle.y = grid;
-  } else if (paddle.y == map.height - paddleHeight - grid) {
-    paddle.y = map.height - paddleHeight - grid * 2;
+  if (paddle.y <= 11.1875) {
+    paddle.y = 11.1875;
+  } else if (paddle.y > 494.9375) {
+    paddle.y = 494.9375;
   }
 }
 
@@ -173,6 +178,12 @@ function renderScore() {
 function loop() {
   if (!pause) {
     pauseLabel.textContent = "";
+    pauseLabel.classList.remove("border");
+    scoreboard.classList.remove("vanish");
+    guide.classList.add("vanish");
+    map.classList.remove("vanish");
+    canToggleMap = false;
+
     clearMap();
 
     renderLeftPaddle();
@@ -196,6 +207,15 @@ function loop() {
 
     renderMap();
   } else {
+    canToggleMap = true;
+
+    pauseLabel.classList.add("border");
+    scoreboard.classList.add("vanish");
+    guide.classList.remove("vanish");
+    map.classList.add("vanish");
+    if (hasMap) {
+      map.classList.remove("vanish");
+    }
     if (ball.x == map.width / 2 && ball.y == map.height / 2) {
       pauseLabel.textContent = "Нажмите SPACE чтобы начать";
     } else {
@@ -208,6 +228,7 @@ function loop() {
 
 document.addEventListener("keydown", (event) => {
   console.log(event.key);
+
   if (event.key === "w" || event.key === "ц") {
     leftPaddle.dy = -paddleSpeed;
   } else if (event.key === "s" || event.key === "ы") {
@@ -218,6 +239,12 @@ document.addEventListener("keydown", (event) => {
     } else if (pause == false) {
       pause = true;
     }
+  } else if (
+    (event.key === "m" && canToggleMap) ||
+    (event.key === "ь" && canToggleMap)
+  ) {
+    hasMap ? (hasMap = false) : (hasMap = true);
+    console.log("карта переключилась");
   }
 });
 
