@@ -235,7 +235,9 @@ document.addEventListener("keydown", (event) => {
     leftPaddle.dy = paddleSpeed;
   } else if (event.key === " ") {
     if (pause == true) {
-      pause = false;
+      setTimeout(() => {
+        pause = false;
+      }, 600);
     } else if (pause == false) {
       pause = true;
     }
